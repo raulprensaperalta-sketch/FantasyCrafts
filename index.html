@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <link rel="canonical" href="https://FantasycraftMCpag.com/">
+    <link rel="apple-touch-icon" href="fotosfant/logofantasy.png">
+    <link rel="icon" href="fotosfant/logofantasy.png" type="image/png">
+    <link rel="stylesheet" href="paginaprincipal/fantasty.css">
+    <title>Fantasycrafts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Pagina oficial de el server de FantasyCraft de Minecraft">
+    <meta property="og:title" content="FantasyCraft | Servidor de Minecraft">
+    <meta property="og:image" content="logofantasy.png">
+
+</head>
+<body>
+    <header>
+        <div class="logofan">
+            <h1>FantasyCrafts</h1>
+            <img src="./fotosfant/logofantasy.png" alt="FantasyCraft logo">
+        </div>
+        <nav class="cabecera">
+            <ul>
+                <li><a href="wikicraft/wikicraft.html"></a></li>
+                <li><a href="https://fantasycrafts-mc.tebex.io/" target="_blank" rel="noopener">Tienda</a></li>
+                <li><a href="comunidad/comunidad.html">Comunidad</a></li>
+                <li><a href="datosfantasy/datosfantasy.html"></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="status-box">
+    <div class="indicador-online"></div>
+    <p>Estado: <span id="server-status">Cargando...</span></p>
+    <p>Jugadores: <span id="player-count">0/100</span></p>
+</div>
+    <main id="pag">
+        <h2>bienvenidos a Fantasycrafts</h2>
+        <p>Fantasycrafts el mejor server de minecraft que veras bienvenidos <br> a las mayor experiencias de sus vidas.</p>
+        
+        <p class="parrafoindicadorips">Estas son las ip de nuestro server:</p>
+            <ul class="contenedor-ips">
+            <li class="ip-jv">
+                <h3>JAVA</h3>
+                <img src="./fotosfant/ipjava.jpeg" alt="ipdejava"
+                    onclick="copiarAlPortapapeles('fantasycrafts.lat', '¡IP de Java Copiada!')">
+            </li>    
+            <li class="ip-bd">
+                <h3>BEDROCK</h3>
+                <img src="./fotosfant/ipbedrock.jpeg" alt="ipdebedrock"
+                    onclick="copiarAlPortapapeles('fantasycrafts.lat', '¡IP de Bedrock Copiada!')">
+            </li>
+            </ul>
+    </main>
+
+    <footer> <small>
+            <span id="numero-copiar" 
+                    onclick="copiarAlPortapapeles('8094012189', '¡Número Copiado!')">
+                <strong>809-401-2189</strong>
+            </span>
+        <p>© 2026 FantasyCrafts - Todos los derechos reservados.</p></small>
+        <small id="mensaje-aviso" style="display: none; color: #d4ffda; background: rgba(0,0,0,0.4); padding: 5px; border-radius: 5px; margin-left: 10px;">
+            ¡Copiado!
+        </small>
+    </footer>
+
+    <script>
+    function copiarAlPortapapeles(textoParaCopiar, mensajePersonalizado) {
+        //nota Usamos el portapapeles del navegador
+        navigator.clipboard.writeText(textoParaCopiar).then(() => {
+            const aviso = document.getElementById("mensaje-aviso");
+            
+            //nota Cambiamos el texto del aviso según lo que se copió
+            aviso.innerText = mensajePersonalizado;
+            aviso.style.display = "inline-block";
+
+            //nota Lo ocultamos después de 2 segundos 
+            setTimeout(() => {
+                aviso.style.display = "none";
+            }, 2000);
+        }).catch(err => {
+            console.error("No se pudo copiar", err);
+        });
+    }
+    </script>
+    <script>
+        // IP y Puerto corregidos con los dos puntos (:)
+        const ipServer = 'fantasycrafts.lat:25565'; 
+
+        function actualizarEstado() {
+            // Usamos la API de Bedrock como pediste
+            fetch(`https://api.mcstatus.io/v2/status/java/${ipServer}`)
+                .then(response => response.json())
+                .then(data => {
+                    const statusText = document.getElementById('server-status');
+                    const playerCount = document.getElementById('player-count');
+                    
+                    if (data.online) {
+                        statusText.innerText = "Online";
+                        statusText.style.color = "#2ecc71"; // Verde
+                        playerCount.innerText = `${data.players.online} / ${data.players.max}`;
+                    } else {
+                        statusText.innerText = "Offline";
+                        statusText.style.color = "#e74c3c"; // Rojo
+                        playerCount.innerText = "0 / 0";
+                    }
+                })
+                .catch(err => {
+                    console.error("Error al conectar con la API:", err);
+                    document.getElementById('server-status').innerText = "Error";
+                });
+        }
+
+        // Se ejecuta apenas carga la web
+        actualizarEstado();
+        // Se actualiza cada 30 segundos
+        setInterval(actualizarEstado, 30000);
+    </script>
+    <script>
+    function cambiarFondoPorHora() {
+        const ahora = new Date();
+        const minutosActuales = (ahora.getHours() * 60) + ahora.getMinutes();
+        const cuerpo = document.body;
+
+        // Horarios: 1 AM, 12 PM, 6:30 PM
+        const tiempoManana = (1 * 60);      
+        const tiempoTarde = (12 * 60);       
+        const tiempoNoche = (18 * 60) + 30;  
+
+        let imagen = "";
+        let opacidad = "0.4";
+
+        if (minutosActuales >= tiempoManana && minutosActuales < tiempoTarde) {
+            // DE 1:00 AM A 11:59 AM
+            imagen = "fondomananafant.jpg";
+            opacidad = "0.3";
+        } else if (minutosActuales >= tiempoTarde && minutosActuales < tiempoNoche) {
+            // DE 12:00 PM A 6:29 PM
+            imagen = "fondotardefant.jpg";
+            opacidad = "0.4";
+        } else {
+            // DE 6:30 PM A 12:59 AM
+            imagen = "fondonochefant.jpg";
+            opacidad = "0.7";
+        }
+
+        // Aplicamos la ruta exacta a tu carpeta fotosfant
+        const rutaCompleta = `fotosfant/${imagen}`;
+        cuerpo.style.backgroundImage = `linear-gradient(rgba(0,0,0,${opacidad}), rgba(0,0,0,${opacidad})), url('${rutaCompleta}')`;
+        
+        console.log("Fondo cargado con éxito: " + imagen);
+    }
+
+    cambiarFondoPorHora();
+    setInterval(cambiarFondoPorHora, 60000);
+</script>
+</body>
+</html>
